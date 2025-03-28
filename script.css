@@ -1,0 +1,45 @@
+const songs = [
+    { title: "Song 1", src: "song1.mp3" },
+    { title: "Song 2", src: "song2.mp3" },
+    { title: "Song 3", src: "song3.mp3" }
+];
+
+let currentSongIndex = 0;
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("play");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const songTitle = document.getElementById("song-title");
+
+function loadSong(index) {
+    songTitle.textContent = songs[index].title;
+    audio.src = songs[index].src;
+}
+
+function playPause() {
+    if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸️";
+    } else {
+        audio.pause();
+        playBtn.textContent = "▶️";
+    }
+}
+
+function prevSong() {
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    loadSong(currentSongIndex);
+    audio.play();
+}
+
+function nextSong() {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(currentSongIndex);
+    audio.play();
+}
+
+playBtn.addEventListener("click", playPause);
+prevBtn.addEventListener("click", prevSong);
+nextBtn.addEventListener("click", nextSong);
+
+loadSong(currentSongIndex);
